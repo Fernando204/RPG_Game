@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="styles/style.css"/>
+  <title>Dragons</title>
+</head>
+<body>
+ 
+  <div id="entry">
+    
+    <h1>Selecione seu personagem: </h1>
+    <div id="players">
+      <button class="PlayerBT PBT2" >Aramis</button>
+      <button class="PlayerBT PBT1" >Geno</button>
+      <button class="PlayerBT PBT6" >kathe</button>
+      <button class="PlayerBT PBT5" >calisto</button>
+      <button class="PlayerBT PBT4" >borg</button>
+      <button class="PlayerBT PBT3" >julian</button>
+      
+    </div>
+
+    <button onclick="entrar()" id="PlayBT">JOGAR</button>
+
+  </div>
+
+  <div id="game"> 
+    <h1 id="devTest"></h1>
+    <div class="base2"></div>
+    <div class="base1"></div>
+  </div>
+
+  <div class="buttons">
+    <button id="esquerda" class="btm"><</button>
+    <button id="direita" class="btm bt2">></button>
+    <button class="plBT" onclick="pular()">pular</button>
+  </div>
+ 
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

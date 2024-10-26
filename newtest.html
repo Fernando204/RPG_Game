@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="{
+        let verify = true;
+        const abacate = ()=>{
+            if(verify){
+                verify = false;
+                document.body.style.backgroundColor = 'blue';
+            } else {
+                verify = true;
+                document.body.style.backgroundColor = 'green';
+            }
+        }
+        setInterval(abacate,1000)
+        alert('foi')
+    }">botão</button>
+</body>
+</html>
