@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-setLogCreateQObject.jljljljljljl.iljjjjjjyjcoi
+
 let PlayersAmount = 0;
 
 app.use(express.static(path.join(__dirname,'public')));
@@ -23,5 +23,5 @@ io.on('connection',(socket)=>{
 
 
 server.listen(3034,()=>{
-    console.log('server ligado na porta 3034');
+    console.log('server ligado na porta http://localhost:3034');
 });

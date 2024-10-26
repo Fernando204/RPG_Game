@@ -1,5 +1,5 @@
 const socket = io('http://localhost:3034');
-const personagens = ["aramis.png","geno.png","kathe.png","calisto.png","borg.png","julian.png"]
+const personagens = ["aramis.png","geno.png","kathe.png","calisto.png","borg.png","julian.png"];
 const entrada = document.getElementById('entry');
 const jogo = document.getElementById('game');
 const PlayersButtons = document.querySelectorAll('.PlayerBT');
@@ -11,14 +11,14 @@ let indexP = 0;
 let timer = 200;
 let lastBTmoveTime = 0;
 let posX = 420;//delimitara até onde o personagem cairá
-let posY = 10;
+let posY = 10;//armazena a posição Horizontal do player
 let atqB = true;
 let salto = true;
 let ingame = false;//variavel para indicar se está na area de jogo
 let velocidade = 200;
 let time = Date.now();
 
-let PlayerInfo = {
+let PlayerInfo = {//informações do player
     Identify: 0,
     index: 0,
     name: " ",
@@ -37,14 +37,15 @@ const getPlayerBottom = ()=>{
     const {bottom} = getComputedStyle(player1);
     const bottomNumber = +bottom.replace('px','');
     console.log("posição atual: "+ bottomNumber);
-    return bottomNumber;
+    return bottomNumber;//retorna a posição de baixo do player
 }
 
 const FinalPos = (S0, v, t)=>{
     const retorno =  S0 + v * t + 0.5 * aceleração * (t**2);
     console.log("retorno:  "+ retorno);
-    return retorno;
+    return retorno;//retorna a posição que o player deve ficar
 }
+
 const createGravity = ()=>{
     
          let gravidade = setInterval(()=>{
@@ -67,8 +68,7 @@ const createGravity = ()=>{
     
     },1);
     
-   
-}; createGravity();
+}; createGravity();//faz com que o player caia
 
 
 const testes = (algo)=>{
@@ -77,7 +77,7 @@ const testes = (algo)=>{
     //essa função é chamada nas funções de movimento e de salto
 }
 
-PlayersButtons.forEach((button, index)=>{
+PlayersButtons.forEach((button, index)=>{//adociona ouvidores de eventos aos botões na pagina inicial
     button.addEventListener('click',()=>{
         PlayersButtons[indexP].style.border = '5px solid black';
         indexP = index;
@@ -85,20 +85,21 @@ PlayersButtons.forEach((button, index)=>{
     })
 })
 
-const entrar = ()=>{//função para ir para o cenario do jogo
+const entrar = (inde)=>{//função para ir para o cenario do jogo
     ingame = true;
     var person = document.createElement("img");
     person.classList.add('players');
-    person.src = personagens[indexP];//adiciona o personagem de acordo com seu indice
+    person.src = personagens[inde];//adiciona o personagem de acordo com seu indice
     document.body.appendChild(person);
     
     player1 = person;
     entrada.style.display = "none";
     jogo.style.display = "flex";
+    PlayerInfo.index = inde;
 
-    requestAnimationFrame(atualizarPlayerPos);
+    requestAnimationFrame(atualizarPlayerPos);//inicia o loop para atualizar a posição do player 
 
-    io.emit('playerEntryInGame', PlayerInfo);
+    socket.emit('playerEntryInGame', PlayerInfo);//avisa o servidor que o player entrou
 }
 
 const ataqueBasico = ()=>{
@@ -217,7 +218,7 @@ const startGamepadLoop = ()=>{
                         }
                     }
                     if(gamepad.buttons[9].pressed){
-                        entrar();
+                        entrar(indexP);
                     }
                 }
                 
@@ -254,7 +255,7 @@ const atualizarPlayerPos = ()=>{
 }
 
 //recebimentos do back-end:
-io.on('PlayerID',(msg)=>{
-    PlayerInfo.Identify = PlayerInfo.Identify !== 0 ? msg : PlayerInfo.Identify;
-    alert(`player ${PlayerInfo.Identify} conectado`);
+socket.on('PlayerID',(msg)=>{
+    PlayerInfo.Identify = PlayerInfo.Identify === 0 ? msg : PlayerInfo.Identify;
+    alert(`player ${PlayerInfo.Identify} conectado  ${msg}`);
 })
